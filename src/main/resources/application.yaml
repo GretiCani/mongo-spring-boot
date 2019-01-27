@@ -5,4 +5,5 @@ spring:
 logging:
   level:
     root: ERROR
-    com.mongodb.client.model: DEBUG
+    com.mongodb.client.model: INFO
+    mongo: DEBUG
