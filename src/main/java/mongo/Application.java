@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.mongodb.client.MongoClient;
 
 import mongo.examples.AggregateExample;
+import mongo.examples.FindExample;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -25,8 +26,10 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		logger.debug("Application.run()");
+		FindExample findImpl = new FindExample();
+		findImpl.testFindMany(mongoClient);
 		AggregateExample aggregateImpl = new AggregateExample();
 		aggregateImpl.testAggregateLookup(mongoClient);
-		aggregateImpl.testAggregateLookupPipeline(mongoClient);
+		aggregateImpl.testAggregateLookupPipeline(mongoClient); 
 	}
 }
