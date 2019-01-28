@@ -28,6 +28,8 @@ public class Application implements CommandLineRunner {
 		logger.debug("Application.run()");
 		FindExample findImpl = new FindExample();
 		findImpl.testFindMany(mongoClient);
+		findImpl.testFindArray(mongoClient);
+		findImpl.testFindArrayElemMatch(mongoClient);
 		AggregateExample aggregateImpl = new AggregateExample();
 		aggregateImpl.testAggregateLookup(mongoClient);
 		aggregateImpl.testAggregateLookupPipeline(mongoClient); 
