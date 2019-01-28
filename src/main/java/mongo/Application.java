@@ -11,6 +11,7 @@ import com.mongodb.client.MongoClient;
 
 import mongo.examples.AggregateExample;
 import mongo.examples.FindExample;
+import mongo.examples.InsertExample;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -26,13 +27,21 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		logger.debug("Application.run()");
+		
+		// Find examples
 		FindExample findImpl = new FindExample();
 		findImpl.testFindMany(mongoClient);
 		findImpl.testFindArray(mongoClient);
 		findImpl.testFindArrayElemMatch(mongoClient);
 		findImpl.testFindKeyValueArray(mongoClient);
+		
+		// Aggregation examples
 		AggregateExample aggregateImpl = new AggregateExample();
 		aggregateImpl.testAggregateLookup(mongoClient);
 		aggregateImpl.testAggregateLookupPipeline(mongoClient); 
+		
+		// Insert examples
+		InsertExample insertImpl = new InsertExample();
+		insertImpl.testInsertOneWMajority(mongoClient);
 	}
 }
