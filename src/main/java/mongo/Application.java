@@ -30,6 +30,7 @@ public class Application implements CommandLineRunner {
 		findImpl.testFindMany(mongoClient);
 		findImpl.testFindArray(mongoClient);
 		findImpl.testFindArrayElemMatch(mongoClient);
+		findImpl.testFindKeyValueArray(mongoClient);
 		AggregateExample aggregateImpl = new AggregateExample();
 		aggregateImpl.testAggregateLookup(mongoClient);
 		aggregateImpl.testAggregateLookupPipeline(mongoClient); 

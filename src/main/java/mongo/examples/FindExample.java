@@ -57,4 +57,19 @@ public class FindExample extends MongoExample {
 				.projection(fields(include("favoriteCity"), slice("favoriteCities", 1), excludeId())).limit(3)
 				.forEach(printer);
 	}
+
+	public void testFindKeyValueArray(MongoClient mongoClient) {
+		logger.debug("testFindKeyValueArray");
+		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
+
+		/*
+		 * db.favorites.find({"favoritesKVList.categories": {"$elemMatch": {"key":
+		 * "book", "value": "Journey to the West"}}}, {"favoriteBooks": 1, "_id":
+		 * 0}).limit(3)
+		 */
+		collection
+				.find(elemMatch("favoritesKVList.categories",
+						and(eq("value", "Journey to the West"), eq("key", "book"))))
+				.projection(fields(include("favoriteBooks"), excludeId())).limit(3).forEach(printer);
+	}
 }
