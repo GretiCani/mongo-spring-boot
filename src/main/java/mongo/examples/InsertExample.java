@@ -1,3 +1,4 @@
+// Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo.examples;
 
 import org.bson.Document;

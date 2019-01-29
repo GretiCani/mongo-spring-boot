@@ -1,3 +1,4 @@
+// Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo;
 
 import org.slf4j.Logger;
@@ -38,7 +39,8 @@ public class Application implements CommandLineRunner {
 		// Aggregation examples
 		AggregateExample aggregateImpl = new AggregateExample();
 		aggregateImpl.testAggregateLookup(mongoClient);
-		aggregateImpl.testAggregateLookupPipeline(mongoClient); 
+		aggregateImpl.testAggregateLookupPipeline(mongoClient);
+		aggregateImpl.testAggregateObjectToArray(mongoClient);
 		
 		// Insert examples
 		InsertExample insertImpl = new InsertExample();

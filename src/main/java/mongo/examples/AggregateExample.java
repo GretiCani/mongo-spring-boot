@@ -1,9 +1,13 @@
+// Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo.examples;
 
+import static com.mongodb.client.model.Aggregates.limit;
 import static com.mongodb.client.model.Aggregates.lookup;
 import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Aggregates.project;
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.expr;
+import static com.mongodb.client.model.Projections.computed;
 import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.fields;
 
@@ -55,4 +59,18 @@ public class AggregateExample extends MongoExample {
 				Aggregates.unwind("$dealer"), Aggregates.group("$dealer.name", Accumulators.sum("count", 1))))
 				.forEach(printer);
 	}
+
+	public void testAggregateObjectToArray(MongoClient mongoClient) {
+		logger.debug("testAggregateObjectToArray");
+		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
+		/*
+		 * [ { '$project': { '_id': 0, 'allFavoritesArray': { '$objectToArray':
+		 * '$favoritesAll' } } }, { '$limit': 3 } ]
+		 */
+		logger.debug("total: " + collection.countDocuments());
+		collection.aggregate(Arrays.asList(
+				project(fields(excludeId(), computed("allFavoritesArray", eq("$objectToArray", "$favoritesAll")))),
+				limit(3))).forEach(printer);
+	}
+
 }
