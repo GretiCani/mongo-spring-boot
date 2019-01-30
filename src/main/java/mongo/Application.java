@@ -19,7 +19,11 @@ public class Application implements CommandLineRunner {
 	private Logger logger = LoggerFactory.getLogger(Application.class);
 
 	@Autowired
-	private MongoClient mongoClient;
+	FindExample findImpl;
+	@Autowired
+	AggregateExample aggregateImpl;
+	@Autowired
+	InsertExample insertImpl;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -28,22 +32,19 @@ public class Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		logger.debug("Application.run()");
-		
+
 		// Find examples
-		FindExample findImpl = new FindExample();
-		findImpl.testFindMany(mongoClient);
-		findImpl.testFindArray(mongoClient);
-		findImpl.testFindArrayElemMatch(mongoClient);
-		findImpl.testFindKeyValueArray(mongoClient);
-		
+		findImpl.testFindMany();
+		findImpl.testFindArray();
+		findImpl.testFindArrayElemMatch();
+		findImpl.testFindKeyValueArray();
+
 		// Aggregation examples
-		AggregateExample aggregateImpl = new AggregateExample();
-		aggregateImpl.testAggregateLookup(mongoClient);
-		aggregateImpl.testAggregateLookupPipeline(mongoClient);
-		aggregateImpl.testAggregateObjectToArray(mongoClient);
-		
+		aggregateImpl.testAggregateLookup();
+		aggregateImpl.testAggregateLookupPipeline();
+		aggregateImpl.testAggregateObjectToArray();
+
 		// Insert examples
-		InsertExample insertImpl = new InsertExample();
-		insertImpl.testInsertOneWMajority(mongoClient);
+		insertImpl.testInsertOneWMajority();
 	}
 }

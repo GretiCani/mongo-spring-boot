@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -24,8 +26,12 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Variable;
 
+@Component
 public class AggregateExample extends MongoExample {
-	public void testAggregateLookup(MongoClient mongoClient) {
+	@Autowired
+	private MongoClient mongoClient;
+	
+	public void testAggregateLookup() {
 		logger.debug("testAggregateLookup");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("cars");
 		/*
@@ -38,7 +44,7 @@ public class AggregateExample extends MongoExample {
 				Aggregates.group("$dealer.name", Accumulators.sum("count", 1)))).forEach(printer);
 	}
 
-	public void testAggregateLookupPipeline(MongoClient mongoClient) {
+	public void testAggregateLookupPipeline() {
 		logger.debug("testAggregateLookupPipeline");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("cars");
 		/*
@@ -60,7 +66,7 @@ public class AggregateExample extends MongoExample {
 				.forEach(printer);
 	}
 
-	public void testAggregateObjectToArray(MongoClient mongoClient) {
+	public void testAggregateObjectToArray() {
 		logger.debug("testAggregateObjectToArray");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
 		/*

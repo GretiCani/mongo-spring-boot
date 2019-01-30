@@ -2,6 +2,8 @@
 package mongo.examples;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoException;
 import com.mongodb.MongoWriteConcernException;
@@ -9,8 +11,12 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 
+@Component
 public class InsertExample extends MongoExample {
-	public void testInsertOneWMajority(MongoClient mongoClient) {
+	@Autowired
+	private MongoClient mongoClient;
+	
+	public void testInsertOneWMajority() {
 		logger.debug("testInsertOneWMajority");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("cars")
 				.withWriteConcern(WriteConcern.MAJORITY);

@@ -12,13 +12,19 @@ import static com.mongodb.client.model.Projections.include;
 import static com.mongodb.client.model.Projections.slice;
 
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Sorts;
 
+@Component
 public class FindExample extends MongoExample {
-	public void testFindMany(MongoClient mongoClient) {
+	@Autowired
+	private MongoClient mongoClient;
+	
+	public void testFindMany() {
 		logger.debug("testFindMany");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("cars");
 
@@ -32,7 +38,7 @@ public class FindExample extends MongoExample {
 				.sort(Sorts.descending("year", "brand", "style")).skip(5).limit(3).forEach(printer);
 	}
 
-	public void testFindArray(MongoClient mongoClient) {
+	public void testFindArray() {
 		logger.debug("testFinArray");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
 
@@ -45,7 +51,7 @@ public class FindExample extends MongoExample {
 				.forEach(printer);
 	}
 
-	public void testFindArrayElemMatch(MongoClient mongoClient) {
+	public void testFindArrayElemMatch() {
 		logger.debug("testFindArrayElemMatch");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
 
@@ -59,7 +65,7 @@ public class FindExample extends MongoExample {
 				.forEach(printer);
 	}
 
-	public void testFindKeyValueArray(MongoClient mongoClient) {
+	public void testFindKeyValueArray() {
 		logger.debug("testFindKeyValueArray");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("favorites");
 
