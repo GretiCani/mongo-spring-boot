@@ -1,6 +1,8 @@
 // Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo;
 
+import java.util.function.Consumer;
+
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,13 @@ public class DocumentPrinter {
 		@Override
 		public void apply(final Document document) {
 			logger.info(document.toJson());
+		}
+	};
+	
+	protected Consumer<Object> consumer = new Consumer<Object>() {
+		@Override
+		public void accept(final Object o) {
+			logger.info(o.toString());
 		}
 	};
 }
