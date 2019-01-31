@@ -19,8 +19,10 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Sorts;
 
+import mongo.DocumentPrinter;
+
 @Component
-public class FindExample extends MongoExample {
+public class FindExample extends DocumentPrinter {
 	@Autowired
 	private MongoClient mongoClient;
 	

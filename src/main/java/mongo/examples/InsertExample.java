@@ -11,8 +11,10 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 
+import mongo.DocumentPrinter;
+
 @Component
-public class InsertExample extends MongoExample {
+public class InsertExample extends DocumentPrinter {
 	@Autowired
 	private MongoClient mongoClient;
 	

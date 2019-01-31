@@ -26,8 +26,10 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Variable;
 
+import mongo.DocumentPrinter;
+
 @Component
-public class AggregateExample extends MongoExample {
+public class AggregateExample extends DocumentPrinter {
 	@Autowired
 	private MongoClient mongoClient;
 	

@@ -1,5 +1,5 @@
 // Copyright 2019 Kuei-chun Chen. All rights reserved.
-package mongo.examples;
+package mongo;
 
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.mongodb.Block;
 
-public class MongoExample {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+public class DocumentPrinter {
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	protected Block<Document> printer = new Block<Document>() {
 		@Override

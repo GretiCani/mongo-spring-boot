@@ -8,8 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.mongodb.client.MongoClient;
-
 import mongo.examples.AggregateExample;
 import mongo.examples.FindExample;
 import mongo.examples.InsertExample;

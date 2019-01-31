@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost/keyhole?replicaSet=replset
+      uri: mongodb://localhost/keyhole?replicaSet=replset&appName=mongo-spring-boot
 logging:
   level:
     root: ERROR
