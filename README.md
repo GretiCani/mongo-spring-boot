@@ -1,5 +1,5 @@
-# Spring Boot with Official MongoDB Java Driver
-MongoDB v. 3.6 and up.
+# Spring Boot with MongoDB
+Demo both the official MongoDB Java driver and Spring Data. MongoDB v. 3.6 and up.
 
 ## Seed Data
 
