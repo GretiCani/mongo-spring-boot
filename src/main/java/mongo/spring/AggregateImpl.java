@@ -4,9 +4,13 @@ package mongo.spring;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.Fields;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.aggregation.LimitOperation;
+import org.springframework.data.mongodb.core.aggregation.LookupOperation;
 import org.springframework.data.mongodb.core.aggregation.ObjectOperators;
 import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
+import org.springframework.data.mongodb.core.aggregation.UnwindOperation;
 import org.springframework.stereotype.Component;
 
 import mongo.DocumentPrinter;
@@ -23,6 +27,12 @@ public class AggregateImpl extends DocumentPrinter {
 		 * '_id', 'as': 'dealer' } }, { '$unwind': { 'path': '$dealer' } }, { '$group':
 		 * { '_id': '$dealer.name', 'count': { '$sum': 1 } } } ]
 		 */
+		LookupOperation lookupStage = Aggregation.lookup(Fields.field("dealers"), Fields.field("dealer"), Fields.field("_id"),
+				Fields.field("dealer"));
+		UnwindOperation unwindStage = Aggregation.unwind("$dealer");
+		GroupOperation groupStage = Aggregation.group("$dealer.name").count().as("count");
+		Aggregation aggregation = Aggregation.newAggregation(lookupStage, unwindStage, groupStage);
+		mongoTemplate.aggregate(aggregation, "cars", Car.class).forEach(consumer);
 	}
 
 	public void testAggregateLookupPipeline() {
