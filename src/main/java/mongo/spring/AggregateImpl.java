@@ -1,10 +1,12 @@
 // Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo.spring;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.Fields;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
+import org.springframework.data.mongodb.core.aggregation.AggregationOperationContext;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.aggregation.LimitOperation;
 import org.springframework.data.mongodb.core.aggregation.LookupOperation;
@@ -27,8 +29,7 @@ public class AggregateImpl extends DocumentPrinter {
 		 * '_id', 'as': 'dealer' } }, { '$unwind': { 'path': '$dealer' } }, { '$group':
 		 * { '_id': '$dealer.name', 'count': { '$sum': 1 } } } ]
 		 */
-		LookupOperation lookupStage = Aggregation.lookup(Fields.field("dealers"), Fields.field("dealer"), Fields.field("_id"),
-				Fields.field("dealer"));
+		LookupOperation lookupStage = Aggregation.lookup("dealers", "dealer", "_id", "dealer");
 		UnwindOperation unwindStage = Aggregation.unwind("$dealer");
 		GroupOperation groupStage = Aggregation.group("$dealer.name").count().as("count");
 		Aggregation aggregation = Aggregation.newAggregation(lookupStage, unwindStage, groupStage);
@@ -44,6 +45,14 @@ public class AggregateImpl extends DocumentPrinter {
 		 * 'path': '$_id' } }, { '$group': { '_id': '$dealer.name', 'count': { '$sum': 1
 		 * } } } ]
 		 */
+		String lookup = "{ '$lookup': { 'from': 'dealers', 'let': { 'dealer': '$dealer' },"
+				+ "	'pipeline': [ { '$match': { '$expr': { '$eq': [ '$_id', '$$dealer' ] } } }, {"
+				+ "	'$project': { 'name': 1, '_id': 0 } } ], 'as': 'dealer' } }";
+		AggregationOperation lookupStage = AggregationOperationParser.parse(lookup);
+		UnwindOperation unwindStage = Aggregation.unwind("$_id");
+		GroupOperation groupStage = Aggregation.group("$dealer.name").count().as("count");
+		Aggregation aggregation = Aggregation.newAggregation(lookupStage, unwindStage, groupStage);
+		mongoTemplate.aggregate(aggregation, "cars", Car.class).forEach(consumer);
 	}
 
 	public void testAggregateObjectToArray() {

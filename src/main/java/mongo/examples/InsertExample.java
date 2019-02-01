@@ -10,6 +10,8 @@ import com.mongodb.MongoWriteConcernException;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 
 import mongo.DocumentPrinter;
 
@@ -17,7 +19,7 @@ import mongo.DocumentPrinter;
 public class InsertExample extends DocumentPrinter {
 	@Autowired
 	private MongoClient mongoClient;
-	
+
 	public void testInsertOneWMajority() {
 		logger.debug("testInsertOneWMajority");
 		MongoCollection<Document> collection = mongoClient.getDatabase("keyhole").getCollection("cars")
@@ -27,7 +29,10 @@ public class InsertExample extends DocumentPrinter {
 		 * db.cars.insertOne({"color": "Red", "year": 2019, "brand": "BMW"})
 		 */
 		try {
-			collection.insertOne(new Document("color", "Read").append("year", 2019).append("brand", "BMW"));
+			Document doc = new Document("color", "Read").append("year", 2019).append("brand", "BMW");
+			collection.insertOne(doc);
+			DeleteResult result = collection.deleteOne(Filters.eq(doc.getObjectId("_id")));
+			logger.debug("n deleted: " + result.getDeletedCount());
 		} catch (MongoWriteConcernException e) {
 			logger.error(e.getMessage());
 		} catch (MongoException e) {
