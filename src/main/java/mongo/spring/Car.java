@@ -15,14 +15,6 @@ public class Car {
 	public int year;
 	public int count;
 
-	public Car() {
-	}
-
-	public Car(String color, String style) {
-		this.color = color;
-		this.style = style;
-	}
-
 	@Override
 	public String toString() {
 		return String.format("{count: %d, brand: '%s', style: '%s', year: %d}", count, brand, style, year);

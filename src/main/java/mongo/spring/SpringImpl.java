@@ -9,6 +9,8 @@ public class SpringImpl {
 	FindImpl findImpl;
 	@Autowired
 	AggregateImpl aggregateImpl;
+	@Autowired
+	InsertImpl insertImpl;
 	
 	public void run() {
 		// Find examples
@@ -21,5 +23,8 @@ public class SpringImpl {
 		aggregateImpl.testAggregateLookup();
 		aggregateImpl.testAggregateLookupPipeline();
 		aggregateImpl.testAggregateObjectToArray();
+	
+		// Insert examples
+		insertImpl.testInsertOneWMajority();
 	}
 }
