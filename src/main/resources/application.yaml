@@ -6,4 +6,5 @@ logging:
   level:
     root: ERROR
     com.mongodb.client.model: INFO
-    mongo: DEBUG
+    mongo.spring: DEBUG
+    org.springframework.data.mongodb.core: DEBUG

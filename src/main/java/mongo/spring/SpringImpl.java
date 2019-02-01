@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpringExamples {
+public class SpringImpl {
 	@Autowired
-	FindExamples findImpl;
+	FindImpl findImpl;
+	@Autowired
+	AggregateImpl aggregateImpl;
 	
 	public void run() {
 		// Find examples
@@ -14,5 +16,10 @@ public class SpringExamples {
 		findImpl.testFindArray();
 		findImpl.testFindArrayElemMatch();
 		findImpl.testFindKeyValueArray();
+	
+		// Aggregation examples
+		aggregateImpl.testAggregateLookup();
+		aggregateImpl.testAggregateLookupPipeline();
+		aggregateImpl.testAggregateObjectToArray();
 	}
 }

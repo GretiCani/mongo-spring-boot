@@ -9,7 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import mongo.examples.MongoExamples;
-import mongo.spring.SpringExamples;
+import mongo.spring.SpringImpl;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -18,7 +18,7 @@ public class Application implements CommandLineRunner {
 	@Autowired
 	MongoExamples mongoExamples;
 	@Autowired
-	SpringExamples SpringExamples;
+	SpringImpl SpringExamples;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

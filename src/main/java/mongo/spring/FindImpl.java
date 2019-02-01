@@ -1,8 +1,6 @@
 // Copyright 2019 Kuei-chun Chen. All rights reserved.
 package mongo.spring;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,9 +11,7 @@ import org.springframework.stereotype.Component;
 import mongo.DocumentPrinter;
 
 @Component
-public class FindExamples extends DocumentPrinter {
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+public class FindImpl extends DocumentPrinter { 
 	@Autowired
 	private MongoTemplate mongoTemplate;
 

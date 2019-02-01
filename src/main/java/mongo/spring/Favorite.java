@@ -14,10 +14,13 @@ public class Favorite {
 	public List<String> favoriteBooks;
 	public List<String> favoriteCities;
 	public List<Hobbies> favoritesList;
+	public List<KV> allFavoritesArray;
 
 	@Override
 	public String toString() {
-		return String.format("{favoriteCity: '%s', favoritesCities: '%s'}", favoriteCity, favoriteCities.get(0));
+		return String.format("{favoriteCity: '%s', favoritesCities: '%s', favoritesAll: '%s'}", favoriteCity,
+				(favoriteCities == null) ? null : favoriteCities.get(0),
+				(allFavoritesArray == null) ? null : allFavoritesArray.get(0).v);
 	}
 }
 
@@ -27,4 +30,9 @@ class Hobbies {
 	public String movie;
 	public String music;
 	public String sport;
+}
+
+class KV {
+	public String k;
+	public String v;
 }
