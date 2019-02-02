@@ -18,9 +18,10 @@ public class Favorite {
 
 	@Override
 	public String toString() {
-		return String.format("{favoriteCity: '%s', favoritesCities: '%s', favoritesAll: '%s'}", favoriteCity,
-				(favoriteCities == null) ? null : favoriteCities.get(0),
-				(allFavoritesArray == null) ? null : allFavoritesArray.get(0).v);
+		return String.format("{favoriteCity: '%s', favoritesCities: '%s', favoritesAll: '%s, favoritesList.0.book: '%s''}",
+				favoriteCity, (favoriteCities == null) ? null : favoriteCities.get(0),
+				(allFavoritesArray == null) ? null : allFavoritesArray.get(0).v,
+				(favoritesList == null) ? null : favoritesList.get(0).book);
 	}
 }
 

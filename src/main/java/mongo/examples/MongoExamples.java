@@ -23,6 +23,7 @@ public class MongoExamples {
 		aggregateImpl.testAggregateLookup();
 		aggregateImpl.testAggregateLookupPipeline();
 		aggregateImpl.testAggregateObjectToArray();
+		aggregateImpl.testAggregateProjectFilter();
 	
 		// Insert examples
 		insertImpl.testInsertOneWMajority();
