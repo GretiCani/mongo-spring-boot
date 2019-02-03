@@ -19,6 +19,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import mongo.DocumentPrinter;
+import mongo.spring.results.AggregateLookupResult;
+import mongo.spring.results.AggregateObjectToArrayResult;
+import mongo.spring.results.AggregateProjectFilterResult;
 
 @Component
 public class AggregateImpl extends DocumentPrinter {
@@ -36,7 +39,7 @@ public class AggregateImpl extends DocumentPrinter {
 		UnwindOperation unwindStage = Aggregation.unwind("$dealer");
 		GroupOperation groupStage = Aggregation.group("$dealer.name").count().as("count");
 		Aggregation aggregation = Aggregation.newAggregation(lookupStage, unwindStage, groupStage);
-		mongoTemplate.aggregate(aggregation, "cars", Car.class).forEach(consumer);
+		mongoTemplate.aggregate(aggregation, "cars", AggregateLookupResult.class).forEach(consumer);
 	}
 
 	public void testAggregateLookupPipeline() {
@@ -55,21 +58,20 @@ public class AggregateImpl extends DocumentPrinter {
 		UnwindOperation unwindStage = Aggregation.unwind("$_id");
 		GroupOperation groupStage = Aggregation.group("$dealer.name").count().as("count");
 		Aggregation aggregation = Aggregation.newAggregation(lookupStage, unwindStage, groupStage);
-		mongoTemplate.aggregate(aggregation, "cars", Car.class).forEach(consumer);
+		mongoTemplate.aggregate(aggregation, "cars", AggregateLookupResult.class).forEach(consumer);
 	}
 
 	public void testAggregateObjectToArray() {
 		logger.debug("testAggregateObjectToArray");
 		/*
-		 * [ { '$project': { '_id': 0, 'favoriteCity', 'favoriteCities',
-		 * 'allFavoritesArray': { '$objectToArray': '$favoritesAll' } } }, { '$limit': 3
-		 * } ]
+		 * [ { '$project': { '_id': 0, 'allFavoritesArray': { '$objectToArray':
+		 * '$favoritesAll' } } }, { '$limit': 3 } ]
 		 */
 		ProjectionOperation projectStage = Aggregation.project("favoriteCity", "favoriteCities").andExclude("_id")
 				.and(ObjectOperators.ObjectToArray.toArray("$favoritesAll")).as("allFavoritesArray");
 		LimitOperation limitStage = Aggregation.limit(3L);
 		Aggregation aggregation = Aggregation.newAggregation(projectStage, limitStage);
-		mongoTemplate.aggregate(aggregation, "favorites", Favorite.class).forEach(consumer);
+		mongoTemplate.aggregate(aggregation, "favorites", AggregateObjectToArrayResult.class).forEach(consumer);
 	}
 
 	public void testAggregateProjectFilter() {
@@ -87,6 +89,6 @@ public class AggregateImpl extends DocumentPrinter {
 				.as("favoritesList").andExclude("_id");
 		LimitOperation limitStage = Aggregation.limit(3L);
 		Aggregation aggregation = Aggregation.newAggregation(matchStage, projectStage, limitStage);
-		mongoTemplate.aggregate(aggregation, "favorites", Favorite.class).forEach(consumer);
+		mongoTemplate.aggregate(aggregation, "favorites", AggregateProjectFilterResult.class).forEach(consumer);
 	}
 }
